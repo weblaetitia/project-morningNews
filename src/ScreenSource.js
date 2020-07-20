@@ -33,9 +33,9 @@ function ScreenSource() {
             <List.Item>
               <List.Item.Meta
                 avatar={
-                  <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                  <Avatar src={`images/${item.category}.png`} />
                 }
-                title={<a href="https://ant.design">{item.name}</a>}
+                title={<a href={`article/${item.id}`}>{item.name}</a>}
                 description={<p>{item.description}</p>}
               />
             </List.Item>
