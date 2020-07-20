@@ -1,4 +1,5 @@
 import React, { useState , useEffect} from "react";
+import {Link} from 'react-router-dom'
 import "./App.css";
 import { List, Avatar } from "antd";
 import Nav from "./Nav";
@@ -35,7 +36,9 @@ function ScreenSource() {
                 avatar={
                   <Avatar src={`images/${item.category}.png`} />
                 }
-                title={<a href={`articles/${item.id}`}>{item.name}</a>}
+                title={
+                <Link to={`articles/${item.id}`}>{item.name}</Link>
+                }
                 description={<p>{item.description}</p>}
               />
             </List.Item>

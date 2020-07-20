@@ -56,11 +56,9 @@ h4 {
   opacity: 0.8;
 }
 
-.Card{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-
+.site-card-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 
