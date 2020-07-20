@@ -35,7 +35,7 @@ function ScreenSource() {
                 avatar={
                   <Avatar src={`images/${item.category}.png`} />
                 }
-                title={<a href={`article/${item.id}`}>{item.name}</a>}
+                title={<a href={`articles/${item.id}`}>{item.name}</a>}
                 description={<p>{item.description}</p>}
               />
             </List.Item>
