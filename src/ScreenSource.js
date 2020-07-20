@@ -1,23 +1,23 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import "./App.css";
 import { List, Avatar } from "antd";
 import Nav from "./Nav";
 
+
 function ScreenSource() {
-  const data = [
-    {
-      title: "Ant Design Title 1",
-    },
-    {
-      title: "Ant Design Title 2",
-    },
-    {
-      title: "Ant Design Title 3",
-    },
-    {
-      title: "Ant Design Title 4",
-    },
-  ];
+
+  const [sourcesList, setSourcesList] = useState([])
+
+  var apiKey = process.env.REACT_APP_NEWS_API_KEY
+  
+  useEffect(() => {
+    async function loadDatas() {
+      var rawResponse = await fetch(`https://newsapi.org/v2/sources?language=fr&apiKey=${apiKey}`)
+      var response = await rawResponse.json()
+      setSourcesList(response.sources)
+    }
+    loadDatas()
+  }, [])
 
   return (
     <div>
@@ -28,15 +28,15 @@ function ScreenSource() {
       <div className="HomeThemes">
         <List
           itemLayout="horizontal"
-          dataSource={data}
+          dataSource={sourcesList}
           renderItem={(item) => (
             <List.Item>
               <List.Item.Meta
                 avatar={
                   <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                 }
-                title={<a href="https://ant.design">{item.title}</a>}
-                description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                title={<a href="https://ant.design">{item.name}</a>}
+                description={<p>{item.description}</p>}
               />
             </List.Item>
           )}
