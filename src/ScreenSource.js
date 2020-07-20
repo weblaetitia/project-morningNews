@@ -30,14 +30,14 @@ function ScreenSource() {
         <List
           itemLayout="horizontal"
           dataSource={sourcesList}
-          renderItem={(item) => (
+          renderItem={(item, i) => (
             <List.Item>
               <List.Item.Meta
                 avatar={
                   <Avatar src={`images/${item.category}.png`} />
                 }
                 title={
-                <Link to={`articles/${item.id}`}>{item.name}</Link>
+                <Link to={`articles/${item.id}`} key={i}>{item.name}</Link>
                 }
                 description={<p>{item.description}</p>}
               />
