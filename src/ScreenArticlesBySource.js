@@ -32,6 +32,7 @@ function ScreenArticlesBySource(props) {
       <Col span={8} >
         <Card style={{marginTop:'2em'}}
           cover={<img alt={article.title} src={article.urlToImage} />}
+          hoverable={true}
           actions={[
             <Icon type="read" key="ellipsis2" onClick={() => showModal(article.title, article.content)}/>,
             <Icon type="like" key="ellipsis" />,
