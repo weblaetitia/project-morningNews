@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import { Row, Col, Card, Icon } from "antd";
+import { Row, Col, Card, Icon, Modal } from "antd";
 import Nav from "./Nav";
 
 
@@ -12,6 +12,7 @@ function ScreenArticlesBySource(props) {
   console.log(props.match.params.id)
   var sourceKey = props.match.params.id
 
+  // liste des articles
   const [articleList, setArticleList] = useState([]);
 
   useEffect(() => {
@@ -26,12 +27,13 @@ function ScreenArticlesBySource(props) {
   }, []);
 
   var boucleArticles = articleList.map(function (article, i) {
+
     return (
       <Col span={8} >
         <Card style={{marginTop:'2em'}}
           cover={<img alt={article.title} src={article.urlToImage} />}
           actions={[
-            <Icon type="read" key="ellipsis2" />,
+            <Icon type="read" key="ellipsis2" onClick={() => showModal(article.title, article.content)}/>,
             <Icon type="like" key="ellipsis" />,
           ]}
         >
@@ -40,6 +42,26 @@ function ScreenArticlesBySource(props) {
       </Col>
     );
   });
+
+  // Modal
+  const [modalVis, setModalVis] = useState(false)
+  const [myTitle, setMyTitle] = useState()
+  const [myContent, setMyContent] = useState()
+  
+
+  var showModal = (title, content) => {
+    setModalVis(true)
+    setMyTitle(title)
+    setMyContent(content)
+  };
+
+  var handleOk = () => {
+    setModalVis(false)
+  };
+
+  var handleCancel = () => {
+    setModalVis(false)
+  };
 
   return (
     <div>
@@ -50,6 +72,9 @@ function ScreenArticlesBySource(props) {
             {boucleArticles}
           </Row>
         </div>
+        <Modal title={myTitle} visible={modalVis} onOk={handleOk} onCancel={handleCancel}>
+          <p>{myContent}</p>
+        </Modal>
     </div>
   );
 }
