@@ -5,16 +5,13 @@ import {Redirect} from 'react-router-dom'
 
 function ScreenHome() {
 
-  // faire des setter pour name, email, passwors
-  // faire des inputs
-  // au clic -> passer les infos à la bdd avec fetch
+  // set redirect url
+  const[redirect, setRedirect] = useState()
 
-
+  // sign up function
   const[signUpName, setSignUpName] = useState()
   const[signUpEmail, setSignUpEmail] = useState()
   const[signUpPassword, setSignUpPassword] = useState()
-
-  const[redirect, setRedirect] = useState()
 
   var handleSubmitSignUp = async () => {
     var rawResponse = await fetch('/sign-up', {
@@ -22,11 +19,25 @@ function ScreenHome() {
       headers: {'Content-Type':'application/x-www-form-urlencoded'},
       body: 'name=' + signUpName + '&email='+ signUpEmail + '&password=' + signUpPassword
     })
-    if (rawResponse)  {
+    if (rawResponse) {
       setRedirect('/sources')
     }
   }
   
+  // sign-in function
+  const[userEmail, setUserEmail] = useState()
+  const[userPassword, setUserPassword] = useState()
+
+  var handleSubmitSignIn = async () => {
+    var rawResponse = await fetch(`/sign-in/${userEmail}/${userPassword}`)
+    var response = await rawResponse.json()
+    console.log(response)
+    console.log(response.succes)
+    console.log(response.alert)
+    if (response.succes) {
+      setRedirect('/sources')
+    }
+  }
 
   return (
     <div className="Login-page">
@@ -38,16 +49,17 @@ function ScreenHome() {
         <Input 
         className="Login-input" 
         placeholder="arthur@lacapsule.com" 
-        // onChange={ (e) => setUserEmail(e.target.value)}
-        // value={userEmail}
+        onChange={ (e) => setUserEmail(e.target.value)}
+        value={userEmail}
         />
         <Input.Password 
         className="Login-input" 
         placeholder="password" 
-        // onChange={ (e) => setUserPassword(e.target.value)}
-        // value={userPassword}
+        onChange={ (e) => setUserPassword(e.target.value)}
+        value={userPassword}
         />
-        <Button style={{ width: "80px" }} type="primary">
+        <Button style={{ width: "80px" }} type="primary" 
+        onClick={ () => handleSubmitSignIn() }>
           Sign-in
         </Button>
       </div>
