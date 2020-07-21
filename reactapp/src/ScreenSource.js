@@ -15,6 +15,7 @@ function ScreenSource() {
     async function loadDatas() {
       var rawResponse = await fetch(`https://newsapi.org/v2/sources?language=fr&apiKey=${apiKey}`)
       var response = await rawResponse.json()
+      console.log(response)
       setSourcesList(response.sources)
     }
     loadDatas()
@@ -34,10 +35,10 @@ function ScreenSource() {
             <List.Item>
               <List.Item.Meta
                 avatar={
-                  <Avatar src={`images/${item.category}.png`} />
+                  <Avatar src={`/images/${item.category}.png`} />
                 }
                 title={
-                <Link to={`articles/${item.id}`} key={i}>{item.name}</Link>
+                <Link to={`/articles/${item.id}`} key={i}>{item.name}</Link>
                 }
                 description={<p>{item.description}</p>}
               />
