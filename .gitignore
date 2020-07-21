@@ -29,4 +29,5 @@ yarn-error.log*
 
 
 # api keys
+/reactapp/.env
 .env 
