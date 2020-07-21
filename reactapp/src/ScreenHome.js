@@ -1,12 +1,42 @@
 import React, { useState } from "react";
 import "./App.css";
-import { Input, Button } from "antd";
+import { Input, Button, Alert } from "antd";
 import {Redirect} from 'react-router-dom'
 
 function ScreenHome() {
 
   // set redirect url
   const[redirect, setRedirect] = useState()
+
+  // Alert box 1
+  const [alertOne, setAlertOne] = useState(false)
+  const [textAlertOne, setTextAlertOne] = useState()
+  const [alertTwo, setAlertTwo] = useState(false)
+  const [textAlertTwo, setTextAlertTwo] = useState()
+
+  var alertStyle = {
+    marginTop: '2em'
+  }
+  var alertTwoStyle
+
+  if (!alertOne) {
+    alertStyle = {
+      ... alertStyle,
+      display: 'none'
+    }
+  } else {
+    alertStyle = {
+      ... alertStyle,
+      display: 'block'
+    }
+  }
+
+  if (!alertTwo) {
+    alertTwoStyle = { ... alertStyle, display: 'none'}
+  } else {
+    alertTwoStyle = { ... alertStyle, display: 'block'}
+  }
+  
 
   // sign up function
   const[signUpName, setSignUpName] = useState()
@@ -19,8 +49,13 @@ function ScreenHome() {
       headers: {'Content-Type':'application/x-www-form-urlencoded'},
       body: 'name=' + signUpName + '&email='+ signUpEmail + '&password=' + signUpPassword
     })
-    if (rawResponse) {
+    var response = await rawResponse.json()
+    
+    if (response.succes) {
       setRedirect('/sources')
+    } else {
+      setAlertTwo(true)
+      setTextAlertTwo(response.alert)
     }
   }
   
@@ -36,6 +71,9 @@ function ScreenHome() {
     console.log(response.alert)
     if (response.succes) {
       setRedirect('/sources')
+    } else {
+      setAlertOne(true)
+      setTextAlertOne(response.alert)
     }
   }
 
@@ -62,6 +100,8 @@ function ScreenHome() {
         onClick={ () => handleSubmitSignIn() }>
           Sign-in
         </Button>
+        <Alert message={textAlertOne} type="error" 
+        style={alertStyle} />
       </div>
 
       {/* SIGN-UP */}
@@ -88,6 +128,8 @@ function ScreenHome() {
         <Button style={{ width: "80px" }} type="primary" onClick={ () => handleSubmitSignUp()}>
           Sign-in
         </Button>
+        <Alert message={textAlertTwo} type="error" 
+        style={alertTwoStyle} />
       </div>
     </div>
   );
