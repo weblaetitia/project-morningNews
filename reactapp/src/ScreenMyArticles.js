@@ -5,9 +5,6 @@ import Nav from "./Nav";
 
 import {connect} from 'react-redux';
 
-
-
-
 const { Meta } = Card;
 
 function ScreenMyArticles(props) {
@@ -19,7 +16,8 @@ function ScreenMyArticles(props) {
                 hoverable={true}
                 actions={[
                   <Icon type="read" key="ellipsis2" />,
-                  <Icon type="delete" key="ellipsis" />,
+                  <Icon type="delete" key="ellipsis" 
+                  onClick={ () => props.deleteFromWL(article.wlTitle) } />,
                 ]}
               >
                 <Meta
@@ -44,16 +42,24 @@ function ScreenMyArticles(props) {
 }
 
 
+// get articles from WL
 function mapStateToProps(storeState) {
-  console.log(storeState.wishList)
   return { myArticles: storeState.wishList }
 }
-// console.log(myArticles)
-// myArticles est un []  
+
+// delete from WL
+function mapDispatchToProps(dispatch) {
+  return {
+    deleteFromWL: function(title) { 
+        dispatch( {type: 'delete', wlTitle: title} ) 
+    }
+  }
+}
+
+
 export default connect(
   mapStateToProps, 
-  null
+  mapDispatchToProps
 )(ScreenMyArticles);
 
 
-// export default ScreenMyArticles;
