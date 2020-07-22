@@ -3,6 +3,10 @@ import "./App.css";
 import { Row, Col, Card, Icon, Modal } from "antd";
 import Nav from "./Nav";
 
+import {connect} from 'react-redux';
+
+// const store;
+
 
 const { Meta } = Card;
 
@@ -35,7 +39,7 @@ function ScreenArticlesBySource(props) {
           hoverable={true}
           actions={[
             <Icon type="read" key="ellipsis2" onClick={() => showModal(article.title, article.content)}/>,
-            <Icon type="like" key="ellipsis" />,
+            <Icon type="like" key="ellipsis" onClick={() => props.addToWishList(article.title, article.content)} />,
           ]}
         >
           <Meta title={article.title} description={article.content} />
@@ -64,6 +68,8 @@ function ScreenArticlesBySource(props) {
     setModalVis(false)
   };
 
+
+
   return (
     <div>
       <Nav />
@@ -80,4 +86,22 @@ function ScreenArticlesBySource(props) {
   );
 }
 
-export default ScreenArticlesBySource;
+
+/* REDUX  */
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addToWishList: function(title, content) { 
+        dispatch( {type: 'addArticle', wlTitle: title, wlContent: content} ) 
+    }
+  }
+}
+
+export default connect(
+    null, 
+    mapDispatchToProps
+)(ScreenArticlesBySource);
+
+/* REDUX  */
+
+// export default ScreenArticlesBySource;
