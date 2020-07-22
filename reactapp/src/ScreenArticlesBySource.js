@@ -27,9 +27,15 @@ function ScreenArticlesBySource(props) {
     }
     loadDatas();
   }, []);
-
+ 
   var boucleArticles = articleList.map(function (article, i) {
-
+    var like = {}
+    props.myArticles.forEach(element => {
+      if (element.wlTitle == article.title) {
+        console.log('deja liké')
+        like = {color: 'red'}
+      }
+    });
     return (
       <Col span={8} >
         <Card style={{marginTop:'2em'}}
@@ -37,7 +43,7 @@ function ScreenArticlesBySource(props) {
           hoverable={true}
           actions={[
             <Icon type="read" key="ellipsis2" onClick={() => showModal(article.title, article.content)}/>,
-            <Icon type="like" key="ellipsis" onClick={() => props.addToWishList(article.title, article.content, article.urlToImage)} />,
+            <Icon type="like" style={like} key="ellipsis" onClick={() => props.addToWishList(article.title, article.content, article.urlToImage)} />,
           ]}
         >
           <Meta title={article.title} description={article.content} />
@@ -86,7 +92,12 @@ function ScreenArticlesBySource(props) {
 
 
 /* REDUX  */
+// get articles from WL
+function mapStateToProps(storeState) {
+  return { myArticles: storeState.wishList }
+}
 
+// add to WL
 function mapDispatchToProps(dispatch) {
   return {
     addToWishList: function(title, content, image) { 
@@ -96,7 +107,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(
-    null, 
+  mapStateToProps, 
     mapDispatchToProps
 )(ScreenArticlesBySource);
 
