@@ -5,7 +5,6 @@ import Nav from "./Nav";
 
 import {connect} from 'react-redux';
 
-// const store;
 
 
 const { Meta } = Card;
@@ -13,7 +12,6 @@ const { Meta } = Card;
 function ScreenArticlesBySource(props) {
 
   var apiKey = process.env.REACT_APP_NEWS_API_KEY
-  console.log(props.match.params.id)
   var sourceKey = props.match.params.id
 
   // liste des articles
@@ -39,7 +37,7 @@ function ScreenArticlesBySource(props) {
           hoverable={true}
           actions={[
             <Icon type="read" key="ellipsis2" onClick={() => showModal(article.title, article.content)}/>,
-            <Icon type="like" key="ellipsis" onClick={() => props.addToWishList(article.title, article.content)} />,
+            <Icon type="like" key="ellipsis" onClick={() => props.addToWishList(article.title, article.content, article.urlToImage)} />,
           ]}
         >
           <Meta title={article.title} description={article.content} />
@@ -72,17 +70,17 @@ function ScreenArticlesBySource(props) {
 
   return (
     <div>
-      <Nav />
-      <div className="Banner" />
-        <div className="site-card-wrapper">
-          <Row gutter={16}>
-            {boucleArticles}
-          </Row>
-        </div>
-        <Modal title={myTitle} visible={modalVis} onOk={handleOk} onCancel={handleCancel}>
-          <p>{myContent}</p>
-        </Modal>
-    </div>
+    <Nav />
+    <div className="Banner" />
+      <div className="site-card-wrapper">
+        <Row gutter={16}>
+          {boucleArticles}
+        </Row>
+      </div>
+      <Modal title={myTitle} visible={modalVis} onOk={handleOk} onCancel={handleCancel}>
+        <p>{myContent}</p>
+      </Modal>
+  </div>
   );
 }
 
@@ -91,8 +89,8 @@ function ScreenArticlesBySource(props) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addToWishList: function(title, content) { 
-        dispatch( {type: 'addArticle', wlTitle: title, wlContent: content} ) 
+    addToWishList: function(title, content, image) { 
+        dispatch( {type: 'addArticle', wlTitle: title, wlContent: content, wlImage: image} ) 
     }
   }
 }
@@ -104,4 +102,3 @@ export default connect(
 
 /* REDUX  */
 
-// export default ScreenArticlesBySource;
