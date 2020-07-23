@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 import "./App.css";
-import { Card, Icon, Col, Row, Alert } from "antd";
+import { Card, Icon, Col, Row, Alert, Modal } from "antd";
 import Nav from "./Nav";
 
 import {connect} from 'react-redux';
@@ -9,6 +9,24 @@ const { Meta } = Card;
 
 function ScreenMyArticles(props) {
 
+
+  const [modalVis, setModalVis] = useState(false)
+  const [myTitle, setMyTitle] = useState()
+  const [myContent, setMyContent] = useState()
+
+  var showModal = (title, content) => {
+    setModalVis(true)
+    setMyTitle(title)
+    setMyContent(content)
+  };
+
+  var handleOk = () => {
+    setModalVis(false)
+  };
+
+  var handleCancel = () => {
+    setModalVis(false)
+  };
 
   if (props.myArticles.length == 0) {
     var alert = <Alert style={{marginTop:'2em', width:'100%'}} message="Pas encore d'article dans vos favoris" type="info" />
@@ -20,7 +38,7 @@ function ScreenMyArticles(props) {
                   cover={<img alt={article.wlTitle} src={article.wlImage} />}
                   hoverable={true}
                   actions={[
-                    <Icon type="read" key="ellipsis2" />,
+                    <Icon type="read" key="ellipsis2" onClick={() => showModal(article.wlTitle, article.wlContent)} />,
                     <Icon type="delete" key="ellipsis" 
                     onClick={ () => props.deleteFromWL(article.wlTitle) } />,
                   ]}
@@ -45,6 +63,9 @@ function ScreenMyArticles(props) {
         {articles}
         </Row>
       </div>
+      <Modal title={myTitle} visible={modalVis} onOk={handleOk} onCancel={handleCancel}>
+        <p>{myContent}</p>
+      </Modal>
   </div>
   );
 }
