@@ -9,12 +9,12 @@ const { Meta } = Card;
 
 function ScreenMyArticles(props) {
 
-  var articles = []
 
   if (props.myArticles.length == 0) {
-    articles = <Alert style={{marginTop:'2em'}} message="Pas encore d'article dans vos favoris" type="info" />
-  } else {
-    articles = props.myArticles.map( (article) => {
+    var alert = <Alert style={{marginTop:'2em', width:'100%'}} message="Pas encore d'article dans vos favoris" type="info" />
+  } 
+  
+  var articles = props.myArticles.map( (article) => {
       return (  <Col xs={24} md={12} lg={8}>
                 <Card style={{marginTop:'2em'}}
                   cover={<img alt={article.wlTitle} src={article.wlImage} />}
@@ -33,7 +33,7 @@ function ScreenMyArticles(props) {
               </Col>
               )
     })
-  }
+  
 
   return (
   <div>
@@ -41,6 +41,7 @@ function ScreenMyArticles(props) {
     <div className="Banner" />
       <div className="site-card-wrapper">
         <Row gutter={16} style={{display:'flex', flexWrap: 'wrap'}}>
+        {alert}
         {articles}
         </Row>
       </div>
