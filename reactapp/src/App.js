@@ -14,8 +14,6 @@ import userToken from "./reducers/token.reducer";
 const store = createStore(combineReducers({ wishList, userToken }));
 
 function App() {
-
-  console.log('store: ', store)
   return (
     <Provider store={store}>
       <Router>
