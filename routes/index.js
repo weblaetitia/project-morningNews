@@ -2,6 +2,11 @@ var express = require('express');
 const UsersModel = require('../models/Users');
 var router = express.Router();
 
+// encryption security
+var SHA256 = require('crypto-js/sha256')
+var encBase64 = require('crypto-js/enc-base64')
+var uid2 = require('uid2')
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
@@ -29,10 +34,13 @@ router.post('/sign-up', async function(req, res, next) {
       })
     } else {
       // user not already exist -> record in database
+      var userSalt = uid2(32)
       var newUser = new UsersModel({
         name: req.body.name,
         email: req.body.email,
-        password: req.body.password,
+        salt: userSalt, 
+        token: uid2(32),
+        password: SHA256(req.body.password + userSalt).toString(encBase64),
       })
       var newUser = await newUser.save()
     
@@ -56,17 +64,26 @@ router.get('/sign-in/:email/:password', async function(req, res, next) {
   } else {
     var myrequest = await UsersModel.find({
       email: req.params.email,
-      password: req.params.password
       })    
+
     if (myrequest.length != 0) {
-      res.json({
-        succes: true,
-        alert: 'all good'
-      })
+      var hash = SHA256(req.params.password + myrequest[0].salt).toString(encBase64)
+      if (hash == myrequest[0].password) {
+        res.json({
+          succes: true,
+          alert: 'all good'
+        })
+      } else {
+        res.json({
+          succes: false,
+          alert: 'wrong password'
+        })
+      }
+      
     } else {
       res.json({
         succes: false,
-        alert: 'wrong user name or password'
+        alert: 'User not exists'
       })
     }
   }
