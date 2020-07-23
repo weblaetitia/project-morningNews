@@ -33,7 +33,7 @@ function ScreenArticlesBySource(props) {
     props.myArticles.forEach(element => {
       if (element.wlTitle == article.title) {
         console.log('deja liké')
-        like = {color: 'red'}
+        like = {color: '#1890ff'}
       }
     });
     return (
