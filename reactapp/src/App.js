@@ -10,8 +10,9 @@ import { Provider } from "react-redux";
 import { createStore, combineReducers } from "redux";
 import wishList from "./reducers/article.reducer";
 import userToken from "./reducers/token.reducer";
+import lang from "./reducers/lang.reducer";
 
-const store = createStore(combineReducers({ wishList, userToken }));
+const store = createStore(combineReducers({ wishList, userToken, lang }));
 
 function App() {
   return (
