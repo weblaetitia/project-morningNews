@@ -3,7 +3,10 @@ import "./App.css";
 import { Input, Button, Alert } from "antd";
 import {Redirect} from 'react-router-dom'
 
-function ScreenHome() {
+import {connect} from 'react-redux';
+
+
+function ScreenHome(props) {
 
   // set redirect url
   const[redirect, setRedirect] = useState()
@@ -50,9 +53,13 @@ function ScreenHome() {
       body: 'name=' + signUpName + '&email='+ signUpEmail + '&password=' + signUpPassword
     })
     var response = await rawResponse.json()
-    
+        
     if (response.succes) {
+      // enregistrer resonse.token dans le store
+      props.addToToken(response.token)
+      // et redirige
       setRedirect('/sources')
+
     } else {
       setAlertTwo(true)
       setTextAlertTwo(response.alert)
@@ -66,10 +73,10 @@ function ScreenHome() {
   var handleSubmitSignIn = async () => {
     var rawResponse = await fetch(`/sign-in/${userEmail}/${userPassword}`)
     var response = await rawResponse.json()
-    console.log(response)
-    console.log(response.succes)
-    console.log(response.alert)
     if (response.succes) {
+      // enregistrer resonse.token dans le store
+      props.addToToken(response.token)
+      // then redirect
       setRedirect('/sources')
     } else {
       setAlertOne(true)
@@ -135,4 +142,26 @@ function ScreenHome() {
   );
 }
 
-export default ScreenHome;
+
+
+
+/* REDUX  */
+
+
+// add token number to token
+function mapDispatchToProps(dispatch) {
+  return {
+    addToToken: function(token) { 
+        dispatch( {type: 'addToken', userToken: token} ) 
+    }
+  }
+}
+/* REDUX  */
+
+
+export default connect(
+  null, 
+  mapDispatchToProps
+)(ScreenHome);
+
+

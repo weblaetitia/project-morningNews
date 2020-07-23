@@ -9,10 +9,13 @@ import ScreenArticlesBySource from "./ScreenArticlesBySource";
 import { Provider } from "react-redux";
 import { createStore, combineReducers } from "redux";
 import wishList from "./reducers/article.reducer";
+import userToken from "./reducers/token.reducer";
 
-const store = createStore(combineReducers({ wishList }));
+const store = createStore(combineReducers({ wishList, userToken }));
 
 function App() {
+
+  console.log('store: ', store)
   return (
     <Provider store={store}>
       <Router>

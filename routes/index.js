@@ -46,7 +46,8 @@ router.post('/sign-up', async function(req, res, next) {
     
       res.json({
         succes: true,
-        alert: 'All good'
+        alert: 'All good',
+        token: newUser.token
       })
     }
   }
@@ -71,7 +72,8 @@ router.get('/sign-in/:email/:password', async function(req, res, next) {
       if (hash == myrequest[0].password) {
         res.json({
           succes: true,
-          alert: 'all good'
+          alert: 'all good', 
+          token: myrequest[0].token
         })
       } else {
         res.json({
