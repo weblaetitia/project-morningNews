@@ -37,7 +37,7 @@ function ScreenArticlesBySource(props) {
       }
     });
     return (
-      <Col span={8} >
+      <Col xs={24} md={12} lg={8}>
         <Card style={{marginTop:'2em'}}
           cover={<img alt={article.title} src={article.urlToImage} />}
           hoverable={true}
@@ -79,7 +79,7 @@ function ScreenArticlesBySource(props) {
     <Nav />
     <div className="Banner" />
       <div className="site-card-wrapper">
-        <Row gutter={16}>
+      <Row gutter={16} style={{display:'flex', flexWrap: 'wrap'}}>
           {boucleArticles}
         </Row>
       </div>

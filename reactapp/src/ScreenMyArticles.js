@@ -15,7 +15,7 @@ function ScreenMyArticles(props) {
     articles = <Alert style={{marginTop:'2em'}} message="Pas encore d'article dans vos favoris" type="info" />
   } else {
     articles = props.myArticles.map( (article) => {
-      return  <Col span={8} >
+      return (  <Col xs={24} md={12} lg={8}>
                 <Card style={{marginTop:'2em'}}
                   cover={<img alt={article.wlTitle} src={article.wlImage} />}
                   hoverable={true}
@@ -31,6 +31,7 @@ function ScreenMyArticles(props) {
                   />
                 </Card>
               </Col>
+              )
     })
   }
 
@@ -39,7 +40,7 @@ function ScreenMyArticles(props) {
     <Nav />
     <div className="Banner" />
       <div className="site-card-wrapper">
-        <Row gutter={16}>
+        <Row gutter={16} style={{display:'flex', flexWrap: 'wrap'}}>
         {articles}
         </Row>
       </div>
