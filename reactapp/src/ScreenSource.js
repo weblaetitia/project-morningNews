@@ -18,7 +18,8 @@ function ScreenSource(props) {
   //   setLang('fr')
   // }
   const env = runtimeEnv();
-  var apiKey = process.env.REACT_APP_NEWS_API_KEY
+  // var apiKey = process.env.REACT_APP_NEWS_API_KEY
+  var apiKey = env.REACT_APP_NEWS_API_KEY
   
   useEffect(() => {
     async function loadDatas() {
