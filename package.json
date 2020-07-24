@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "-": "0.0.1",
+    "@mars/heroku-js-runtime-env": "^3.0.2",
     "cookie-parser": "~1.4.4",
     "crypto-js": "^4.0.0",
     "debug": "~2.6.9",

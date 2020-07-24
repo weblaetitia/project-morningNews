@@ -1,4 +1,7 @@
 import React, { useState , useEffect} from "react";
+
+import runtimeEnv from '@mars/heroku-js-runtime-env';
+
 import {Link} from 'react-router-dom'
 import "./App.css";
 import { List, Avatar } from "antd";
@@ -14,7 +17,7 @@ function ScreenSource(props) {
   // if (lang == undefined) {
   //   setLang('fr')
   // }
-
+  const env = runtimeEnv();
   var apiKey = process.env.REACT_APP_NEWS_API_KEY
   
   useEffect(() => {
