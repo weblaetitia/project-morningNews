@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 if(!process.env.DB_INFO) {
   require('dotenv').config()
 }
+
 var uri = process.env.DB_INFO
 
 var options = {
