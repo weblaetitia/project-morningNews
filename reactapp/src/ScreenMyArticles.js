@@ -37,8 +37,8 @@ function ScreenMyArticles(props) {
     await fetch(`/deletearticle?token=${props.token}&title=${article.wlTitle}`)
   }
   
-  var articles = props.myArticles.map( (article) => {
-      return (  <Col xs={24} md={12} lg={8}>
+  var articles = props.myArticles.map( (article, i) => {
+      return (  <Col key={i.toString()} xs={24} md={12} lg={8}>
                 <Card style={{marginTop:'2em'}}
                   cover={<img alt={article.wlTitle} src={article.wlImage} />}
                   hoverable={true}

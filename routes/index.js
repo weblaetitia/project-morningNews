@@ -143,7 +143,6 @@ router.get('/deletearticle', async function(req, res, next) {
     {token: req.query.token},
     {$pull: {articles: {title: req.query.title}}}
     )
-  
     res.json({succes: false, error: 'something went wrong'})
   
 })

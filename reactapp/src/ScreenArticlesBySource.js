@@ -11,7 +11,6 @@ const { Meta } = Card;
 
 function ScreenArticlesBySource(props) {
 
-  var apiKey = process.env.REACT_APP_NEWS_API_KEY
   var sourceKey = props.match.params.id
 
   // liste des articles
@@ -24,14 +23,12 @@ function ScreenArticlesBySource(props) {
       );
       var response = await rawResponse.json();
       setArticleList(response.articles);
-      console.log(response.articles)
     }
     loadDatas();
   }, []);
 
   // add article to DB
   var addArticleToDb = async (article) => {
-    console.log(props.token)
      var rawResponse = await fetch('/addarticle', {
         method: 'PUT',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
@@ -50,7 +47,7 @@ function ScreenArticlesBySource(props) {
       }
     });
     return (
-      <Col xs={24} md={12} lg={8}>
+      <Col key={i.toString()} xs={24} md={12} lg={8}>
         <Card style={{marginTop:'2em'}}
           cover={<img alt={article.title} src={article.urlToImage} />}
           hoverable={true}
