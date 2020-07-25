@@ -22,8 +22,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-/*      SIGN_UP     */
-/*   Add new user   */
+/************      SIGN_UP     ************/
 router.post('/sign-up', async function(req, res, next) {
   // check if all inputs are field
   if ((req.body.name == 'undefined') || (req.body.email == 'undefined') || (req.body.password == 'undefined')) {
@@ -63,8 +62,7 @@ router.post('/sign-up', async function(req, res, next) {
   }
 })
 
-/*         SIGN_IN        */
-/*   Chek if user exist   */
+/************         SIGN_IN        ************/
 router.get('/sign-in/:email/:password', async function(req, res, next) {
   // Check if all inputs are field
   if ((req.params.email == 'undefined') || (req.params.password == 'undefined')) {
@@ -118,6 +116,27 @@ router.get('/getsources', async function(req, res, next) {
   res.json(myRequest)
 })
 
+
+/************     GET SOURCES FROM API      ************/
+router.put('/addarticle', async function(req, res, next) {
+  var user = await UsersModel.findOne(
+    {token: req.body.token}
+  )
+  if (!user) {
+    res.json({succes: true, error: 'user must be log-in'})
+  } else {
+    user.articles.push({
+      title: req.body.title,
+      content: req.body.content,
+      description: req.body.description,
+      urlToImage: req.body.urlToImage,
+      language: req.body.language
+  })
+  user = await user.save()
+  res.json({succes: true, user})
+  }
+
+})
 
 
 

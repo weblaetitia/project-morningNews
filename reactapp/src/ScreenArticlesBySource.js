@@ -24,15 +24,28 @@ function ScreenArticlesBySource(props) {
       );
       var response = await rawResponse.json();
       setArticleList(response.articles);
+      console.log(response.articles)
     }
     loadDatas();
   }, []);
+
+  // add article to DB
+  var addArticleToDb = async (article) => {
+    console.log(props.token)
+     var rawResponse = await fetch('/addarticle', {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: `token=${props.token}&title=${article.title}&content=${article.content}&description=${article.description}&url=${article.url}&urlToImage=${article.urltoImage}&language=${props.language}`
+      }
+      )
+      var response = await rawResponse.json();
+      console.log(response)
+  }
  
   var boucleArticles = articleList.map(function (article, i) {
     var like = {}
     props.myArticles.forEach(element => {
       if (element.wlTitle == article.title) {
-        console.log('deja liké')
         like = {color: '#1890ff'}
       }
     });
@@ -43,7 +56,7 @@ function ScreenArticlesBySource(props) {
           hoverable={true}
           actions={[
             <Icon type="read" key="ellipsis2" onClick={() => showModal(article.title, article.content)}/>,
-            <Icon type="like" style={like} key="ellipsis" onClick={() => props.addToWishList(article.title, article.content, article.urlToImage)} />,
+            <Icon type="like" style={like} key="ellipsis" onClick={() => {addArticleToDb(article) ; props.addToWishList(article.title, article.content, article.urlToImage)}} />,
           ]}
         >
           <Meta title={article.title} description={article.content} />
@@ -94,7 +107,9 @@ function ScreenArticlesBySource(props) {
 /* REDUX  */
 // get articles from WL
 function mapStateToProps(storeState) {
-  return { myArticles: storeState.wishList }
+  return { myArticles: storeState.wishList,
+          token: storeState.userToken,
+          language: storeState.lang }
 }
 
 // add to WL
