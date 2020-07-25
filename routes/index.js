@@ -117,7 +117,7 @@ router.get('/getsources', async function(req, res, next) {
 })
 
 
-/************     GET SOURCES FROM API      ************/
+/************     PUT ARTICLE IN DB      ************/
 router.put('/addarticle', async function(req, res, next) {
   var user = await UsersModel.findOne(
     {token: req.body.token}
@@ -135,7 +135,6 @@ router.put('/addarticle', async function(req, res, next) {
   user = await user.save()
   res.json({succes: true, user})
   }
-
 })
 
 
