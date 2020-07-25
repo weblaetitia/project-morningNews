@@ -2,6 +2,16 @@ var express = require('express');
 const UsersModel = require('../models/Users');
 var router = express.Router();
 
+var request = require('sync-request');
+
+// dotenv
+if(!process.env.DB_INFO) {
+  require('dotenv').config()
+}
+
+var apikey = process.env.REACT_APP_NEWS_API_KEY
+
+
 // encryption security
 var SHA256 = require('crypto-js/sha256')
 var encBase64 = require('crypto-js/enc-base64')
@@ -91,9 +101,22 @@ router.get('/sign-in/:email/:password', async function(req, res, next) {
   }
 })
 
+/************     GET SOURCES FROM API      ************/
+router.get('/getapi', async function(req, res, next) {
+  var language = req.query.language
+  var myRequest = request('GET', (`https://newsapi.org/v2/sources?language=${language}&apiKey=${apikey}`))
+  myRequest = JSON.parse(myRequest.getBody())
+  res.json(myRequest)
+})
 
 
-
+/************     GET SOURCES FROM API      ************/
+router.get('/getsources', async function(req, res, next) {
+  var sources = req.query.sources
+  var myRequest = request('GET', (`https://newsapi.org/v2/top-headlines?sources=${sources}&apiKey=${apikey}`))
+  myRequest = JSON.parse(myRequest.getBody())
+  res.json(myRequest)
+})
 
 
 

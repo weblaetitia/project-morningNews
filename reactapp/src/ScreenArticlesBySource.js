@@ -20,7 +20,7 @@ function ScreenArticlesBySource(props) {
   useEffect(() => {
     async function loadDatas() {
       var rawResponse = await fetch(
-        `https://newsapi.org/v2/top-headlines?sources=${sourceKey}&apiKey=${apiKey}`
+        `/getsources?sources=${sourceKey}`
       );
       var response = await rawResponse.json();
       setArticleList(response.articles);

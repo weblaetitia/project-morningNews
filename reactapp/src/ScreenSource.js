@@ -13,24 +13,17 @@ import {connect} from 'react-redux';
 function ScreenSource(props) {
 
   const [sourcesList, setSourcesList] = useState([])
-  // const [lang, setLang] = useState()
-  // if (lang == undefined) {
-  //   setLang('fr')
-  // }
-  const env = runtimeEnv();
-  // var apiKey = process.env.REACT_APP_NEWS_API_KEY
-  var apiKey = env.REACT_APP_NEWS_API_KEY
+  const [apiKey, setApikey] = useState()
   
+
   useEffect(() => {
     async function loadDatas() {
-      var rawResponse = await fetch(`https://newsapi.org/v2/sources?language=${props.lang}&apiKey=${apiKey}`)
-      var response = await rawResponse.json()
+      var rawResponse = await fetch(`/getapi?language=${props.lang}`)
+      var response = await rawResponse.json()      
       setSourcesList(response.sources)
-
     }
     loadDatas()
   }, [props.lang])
-
   
 
   return (
