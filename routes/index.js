@@ -123,7 +123,7 @@ router.put('/addarticle', async function(req, res, next) {
     {token: req.body.token}
   )
   if (!user) {
-    res.json({succes: true, error: 'user must be log-in'})
+    res.json({succes: false, error: 'user must be log-in'})
   } else {
     user.articles.push({
       title: req.body.title,
@@ -133,10 +133,20 @@ router.put('/addarticle', async function(req, res, next) {
       language: req.body.language
   })
   user = await user.save()
-  res.json({succes: true, user})
+  res.json({succes: true})
   }
 })
 
+/************     DELETE ARTICLE FROM DB      ************/
+router.get('/deletearticle', async function(req, res, next) {
+  await UsersModel.updateOne(
+    {token: req.query.token},
+    {$pull: {articles: {title: req.query.title}}}
+    )
+  
+    res.json({succes: false, error: 'something went wrong'})
+  
+})
 
 
 

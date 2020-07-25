@@ -32,6 +32,11 @@ function ScreenMyArticles(props) {
     var alert = <Alert style={{marginTop:'2em', width:'100%'}} message="Pas encore d'article dans vos favoris" type="info" />
   } 
   
+  // delete article from DB when pressing trash-btn
+  var deleteFromDb = async (article) => {
+    await fetch(`/deletearticle?token=${props.token}&title=${article.wlTitle}`)
+  }
+  
   var articles = props.myArticles.map( (article) => {
       return (  <Col xs={24} md={12} lg={8}>
                 <Card style={{marginTop:'2em'}}
@@ -40,7 +45,7 @@ function ScreenMyArticles(props) {
                   actions={[
                     <Icon type="read" key="ellipsis2" onClick={() => showModal(article.wlTitle, article.wlContent)} />,
                     <Icon type="delete" key="ellipsis" 
-                    onClick={ () => props.deleteFromWL(article.wlTitle) } />,
+                    onClick={ () => {deleteFromDb(article) ; props.deleteFromWL(article.wlTitle)} } />,
                   ]}
                 >
                   <Meta
@@ -73,7 +78,8 @@ function ScreenMyArticles(props) {
 
 // get articles from WL
 function mapStateToProps(storeState) {
-  return { myArticles: storeState.wishList }
+  return { myArticles: storeState.wishList, 
+           token: storeState.userToken }
 }
 
 // delete from WL
