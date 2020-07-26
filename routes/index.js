@@ -116,6 +116,20 @@ router.get('/getsources', async function(req, res, next) {
   res.json(myRequest)
 })
 
+/************     GET ARTICLES FROM DB      ************/
+router.get('/getarticles', async function(req, res, next) {
+  var user = await UsersModel.findOne({
+    token: req.query.token
+  })
+  if (!user) {
+    res.json({succes: false, error: 'user must be log-in'})
+  } else {
+    // console.log(user.articles)
+    // ok it returns an []
+    res.json(user.articles)
+  }
+})
+
 
 /************     PUT ARTICLE IN DB      ************/
 router.put('/addarticle', async function(req, res, next) {
@@ -133,7 +147,7 @@ router.put('/addarticle', async function(req, res, next) {
       language: req.body.language
   })
   user = await user.save()
-  res.json({succes: true})
+  res.json({succes: true})    
   }
 })
 

@@ -15,11 +15,21 @@ function ScreenSource(props) {
   const [sourcesList, setSourcesList] = useState([])
   const [apiKey, setApikey] = useState()
   
+  // get articles from user's db
+  useEffect ( () => {
+    async function loadData () {
+      const rawResponse = await fetch(`/getarticles?token=${props.token}`)
+      var response = await rawResponse.json()
+      props.recordWishListFromDB(response)
+    }
+    loadData()
+
+  }, [])
 
   useEffect(() => {
     async function loadDatas() {
       var rawResponse = await fetch(`/getapi?language=${props.lang}`)
-      var response = await rawResponse.json()      
+      var response = await rawResponse.json()   
       setSourcesList(response.sources)
     }
     loadDatas()
@@ -62,7 +72,8 @@ function ScreenSource(props) {
 /* REDUX  */
 // get languages
 function mapStateToProps(storeState) {
-  return { lang: storeState.lang }
+  return { lang: storeState.lang,
+            token: storeState.userToken }
 }
 
 // add to WL
@@ -70,6 +81,9 @@ function mapDispatchToProps(dispatch) {
   return {
     chooseLanguage: function(value) { 
         dispatch( {type: 'switchLanguage', lang: value} ) 
+    },
+    recordWishListFromDB: function(articles) {
+      dispatch( {type: 'getArticles', articlesFromDB: articles})
     }
   }
 }

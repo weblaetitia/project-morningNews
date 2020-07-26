@@ -34,23 +34,23 @@ function ScreenMyArticles(props) {
   
   // delete article from DB when pressing trash-btn
   var deleteFromDb = async (article) => {
-    await fetch(`/deletearticle?token=${props.token}&title=${article.wlTitle}`)
+    await fetch(`/deletearticle?token=${props.token}&title=${article.title}`)
   }
   
   var articles = props.myArticles.map( (article, i) => {
       return (  <Col key={i.toString()} xs={24} md={12} lg={8}>
                 <Card style={{marginTop:'2em'}}
-                  cover={<img alt={article.wlTitle} src={article.wlImage} />}
+                  cover={<img alt={article.title} src={article.urlToImage} />}
                   hoverable={true}
                   actions={[
-                    <Icon type="read" key="ellipsis2" onClick={() => showModal(article.wlTitle, article.wlContent)} />,
+                    <Icon type="read" key="ellipsis2" onClick={() => showModal(article.title, article.content)} />,
                     <Icon type="delete" key="ellipsis" 
-                    onClick={ () => {deleteFromDb(article) ; props.deleteFromWL(article.wlTitle)} } />,
+                    onClick={ () => {deleteFromDb(article) ; props.deleteFromWL(article.title)} } />,
                   ]}
                 >
                   <Meta
-                    title={article.wlTitle}
-                    description={article.wlContent}
+                    title={article.title}
+                    description={article.content}
                   />
                 </Card>
               </Col>
@@ -86,7 +86,7 @@ function mapStateToProps(storeState) {
 function mapDispatchToProps(dispatch) {
   return {
     deleteFromWL: function(title) { 
-        dispatch( {type: 'delete', wlTitle: title} ) 
+        dispatch( {type: 'delete', title: title} ) 
     }
   }
 }

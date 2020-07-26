@@ -32,13 +32,13 @@ function ScreenArticlesBySource(props) {
      var rawResponse = await fetch('/addarticle', {
         method: 'PUT',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: `token=${props.token}&title=${article.title}&content=${article.content}&description=${article.description}&url=${article.url}&urlToImage=${article.urltoImage}&language=${props.language}`
+        body: `token=${props.token}&title=${article.title}&content=${article.content}&description=${article.description}&url=${article.url}&urlToImage=${article.urlToImage}&language=${props.language}`
       }
       )
       var response = await rawResponse.json();
-      console.log(response)
   }
- 
+
+  // loop articles
   var boucleArticles = articleList.map(function (article, i) {
     var like = {}
     props.myArticles.forEach(element => {
@@ -113,7 +113,7 @@ function mapStateToProps(storeState) {
 function mapDispatchToProps(dispatch) {
   return {
     addToWishList: function(title, content, image) { 
-        dispatch( {type: 'addArticle', wlTitle: title, wlContent: content, wlImage: image} ) 
+        dispatch( {type: 'addArticle', title: title, content: content, urlToImage: image} ) 
     }
   }
 }
