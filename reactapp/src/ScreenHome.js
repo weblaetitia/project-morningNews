@@ -24,20 +24,20 @@ function ScreenHome(props) {
 
   if (!alertOne) {
     alertStyle = {
-      ... alertStyle,
+      ...alertStyle,
       display: 'none'
     }
   } else {
     alertStyle = {
-      ... alertStyle,
+      ...alertStyle,
       display: 'block'
     }
   }
 
   if (!alertTwo) {
-    alertTwoStyle = { ... alertStyle, display: 'none'}
+    alertTwoStyle = { ...alertStyle, display: 'none'}
   } else {
-    alertTwoStyle = { ... alertStyle, display: 'block'}
+    alertTwoStyle = { ...alertStyle, display: 'block'}
   }
   
 

@@ -29,20 +29,18 @@ function ScreenArticlesBySource(props) {
 
   // add article to DB
   var addArticleToDb = async (article) => {
-     var rawResponse = await fetch('/addarticle', {
+     await fetch('/addarticle', {
         method: 'PUT',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         body: `token=${props.token}&title=${article.title}&content=${article.content}&description=${article.description}&url=${article.url}&urlToImage=${article.urlToImage}&language=${props.language}`
-      }
-      )
-      var response = await rawResponse.json();
+      })
   }
 
   // loop articles
   var boucleArticles = articleList.map(function (article, i) {
     var like = {}
     props.myArticles.forEach(element => {
-      if (element.wlTitle == article.title) {
+      if (element.wlTitle === article.title) {
         like = {color: '#1890ff'}
       }
     });

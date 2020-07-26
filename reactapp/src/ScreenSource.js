@@ -1,7 +1,5 @@
 import React, { useState , useEffect} from "react";
 
-import runtimeEnv from '@mars/heroku-js-runtime-env';
-
 import {Link} from 'react-router-dom'
 import "./App.css";
 import { List, Avatar } from "antd";
@@ -13,7 +11,6 @@ import {connect} from 'react-redux';
 function ScreenSource(props) {
 
   const [sourcesList, setSourcesList] = useState([])
-  const [apiKey, setApikey] = useState()
   
   // get articles from user's db
   useEffect ( () => {

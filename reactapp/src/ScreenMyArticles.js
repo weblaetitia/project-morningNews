@@ -28,7 +28,7 @@ function ScreenMyArticles(props) {
     setModalVis(false)
   };
 
-  if (props.myArticles.length == 0) {
+  if (props.myArticles.length === 0) {
     var alert = <Alert style={{marginTop:'2em', width:'100%'}} message="Pas encore d'article dans vos favoris" type="info" />
   } 
   

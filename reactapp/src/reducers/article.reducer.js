@@ -1,10 +1,10 @@
 // ici action = l'objet reçu
 
 export default function(wishList = [], action) {
-  if(action.type == 'addArticle') {
+  if(action.type === 'addArticle') {
     var find = false 
     wishList.forEach(element => {
-      if (element.title == action.title) {
+      if (element.title === action.title) {
         find = true
       }
     })
@@ -15,10 +15,10 @@ export default function(wishList = [], action) {
     } else {
       return wishList
     }
-  } else if (action.type == 'delete') {
+  } else if (action.type === 'delete') {
     var filterArray = wishList.filter(element => element.title !== action.title)
     return filterArray;
-  } else if (action.type == 'getArticles') {
+  } else if (action.type === 'getArticles') {
     return action.articlesFromDB;
   } else {
     return wishList;
