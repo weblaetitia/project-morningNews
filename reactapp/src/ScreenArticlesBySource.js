@@ -40,7 +40,7 @@ function ScreenArticlesBySource(props) {
   var boucleArticles = articleList.map(function (article, i) {
     var like = {}
     props.myArticles.forEach(element => {
-      if (element.wlTitle === article.title) {
+      if (element.title === article.title) {
         like = {color: '#1890ff'}
       }
     });
