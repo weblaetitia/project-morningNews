@@ -139,15 +139,29 @@ router.put('/addarticle', async function(req, res, next) {
   if (!user) {
     res.json({succes: false, error: 'user must be log-in'})
   } else {
-    user.articles.push({
+    var articleExist = false
+    console.log(user.articles)
+    user.articles.forEach(element => {
+      if (req.body.title === element.title) {
+        console.log('titre dans la db : ',element.title)
+        articleExist = true
+      }
+  })
+  if (!articleExist) {
+     await user.articles.push({
       title: req.body.title,
       content: req.body.content,
       description: req.body.description,
       urlToImage: req.body.urlToImage,
       language: req.body.language
-  })
-  user = await user.save()
-  res.json({succes: true})    
+    })
+    user = await user.save()
+    console.log('ok push')
+    res.json({succes: true}) 
+    } else {
+      console.log('article allready in db')
+      res.json({succes: false, error: 'article allready in db'}) 
+    }
   }
 })
 
