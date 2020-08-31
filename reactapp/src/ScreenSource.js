@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 import "./App.css";
 import { List, Avatar } from "antd";
 import Nav from "./Nav";
+import Footer from "./Footer";
 
 import {connect} from 'react-redux';
 
@@ -62,6 +63,7 @@ function ScreenSource(props) {
           )}
         />
       </div>
+      <Footer />
     </div>
   );
 }

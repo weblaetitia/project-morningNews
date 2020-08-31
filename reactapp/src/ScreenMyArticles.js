@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import "./App.css";
 import { Card, Icon, Col, Row, Alert, Modal } from "antd";
 import Nav from "./Nav";
+import Footer from "./Footer";
 
 import {connect} from 'react-redux';
 
@@ -71,6 +72,7 @@ function ScreenMyArticles(props) {
       <Modal title={myTitle} visible={modalVis} onOk={handleOk} onCancel={handleCancel}>
         <p>{myContent}</p>
       </Modal>
+      <Footer />
   </div>
   );
 }
